@@ -1,10 +1,13 @@
 require("dotenv").config();
-const apiRouter = require("./routers/api.router");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const authRoutes = require("./routers/auth.router");
+const userRoutes = require("./routers/user.router");
+const authorRoutes = require("./routers/author.router");
+const quoteRoutes = require("./routers/quote.router");
 
 const { PORT } = process.env;
 
@@ -18,7 +21,10 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use("/api/v1", apiRouter);
+app.use(authRoutes);
+app.use(userRoutes);
+app.use(authorRoutes);
+app.use(quoteRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server started at ${PORT} port`);
